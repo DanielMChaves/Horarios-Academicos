@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import os
 
@@ -17,15 +18,14 @@ salir = 0
 print ""
 print " ---------------------------------------------------------- "
 print "|   Bienvenido al Programa de Introduccion de Horarios     |"
-#print "|             CopyRight: Daniel Melero Chaves              |"
 print " ---------------------------------------------------------- "
 print ""
 
-#nb = input('Choose a number: ')
-#number = int(nb)
+open("salidaTemp.txt",'w').close()
+open("salida.json",'w').close()
 
-temp = open("salidaTemp.txt")
-out = open("salida.json","w")
+temp = open("salidaTemp.txt",'r+')
+out = open("salida.json",'w')
 
 while salir == 0:
 
@@ -39,11 +39,7 @@ while salir == 0:
 	print "\tTurno: " + str(turno)
 	print "\tGrupo: " + str(grupo)
 	print "\tDia: " + str(dia)
-	#print "\tHora de Inicio: " + hora_inicio
-	#print "\tHora de Fin: " + hora_fin
-	#print "\tAsignatura: " + asignatura
 	print ""
-
 	print " ---------------------------------------------------------- "
 	print "|                Elija una Accion a Realizar               |"
 	print " ---------------------------------------------------------- "
@@ -53,11 +49,12 @@ while salir == 0:
 	print "|        7: Introducir Horario   0: Salir                  |"	
 	print " ---------------------------------------------------------- "
 	print ""
-	print "Escriba una Opcion: "
+	print "Escriba una opcion: "
 
 	accion = int(input())
 
 	if accion == 0:
+
 		print ""
 		print " ---------------------------------------------------------- "
 		print "|                Generamos el Fichero JSON                 |"
@@ -66,7 +63,10 @@ while salir == 0:
 
 		out.write("{ \"horarios\":[\n");
 
+		temp.seek(0, os.SEEK_SET)
 		linea = temp.readline()
+
+		print linea
 
 		while linea:
 
@@ -91,6 +91,9 @@ while salir == 0:
 		out.seek(-2, os.SEEK_END)
 		out.write("\n] }\n");
 
+		temp.close()
+		out.close()
+
 		salir = 1
 
 		print " ---------------------------------------------------------- "
@@ -98,35 +101,47 @@ while salir == 0:
 		print " ---------------------------------------------------------- "
 		print ""
 	if accion == 1:
-		print "Escriba el Nuevo Grado, Formato: 'grado'"
+		print "Escriba el grado, Formato: 'grado'"
 		grado = str(input())
 		print ""
 	if accion == 2:
-		print "Escriba el Nuevo Curso, Formato: curso"
+		print "Escriba el curso, Formato: curso"
 		curso = int(input())
 		print ""
 	if accion == 3:
-		print "Escriba el Nuevo Semestre, Formato: curso"
+		print "Escriba el semestre, Formato: curso"
 		semestre = int(input())
 		print ""
 	if accion == 4:
-		print "Escriba el Nuevo Turno, Formato: 'turno'"
+		print "Escriba el turno, Formato: 'turno'"
 		turno = str(input())
 		print ""
 	if accion == 5:
-		print "Escriba el Nuevo Grupo, Formato: 'grupo'"
+		print "Escriba el grupo, Formato: 'grupo'"
 		grupo = str(input())
 		print ""
 	if accion == 6:
-		print "Escriba el Nuevo Dia, Formato: 'dia'"
+		print "Escriba el dia, Formato: 'dia'"
 		dia = str(input())
 		print ""
 	if accion == 7:
-		print "Escriba el Nuevo Dia, Formato: 'dia'"
-		dia = str(input())
+		print "Escriba la hora de comienzo, Formato: hora_inicio"
+		hora_inicio = str(input())
+		print "Escriba la hora de finalizacion, Formato: hora_fin"
+		hora_fin = str(input())
+		print "Escriba la asignatura, Formato: 'asignatura'"
+		asignatura = str(input())
 		print ""
+		aux = "horario(" + str(grado) + "," + str(curso) + "," + str(semestre) + ","
+		aux += str(turno) + "," + str(grupo) + "," + str(dia) + ","
+		aux += str(hora_inicio) + "," + str(hora_fin) + "," + str(asignatura) + ")"
+		print "Se va a guardar este horario:\n" + aux
+		print ""
+		print "¿Es correcto?: 0: Sip o 1: No"
+		accion = int(input())
+		if accion == 0:
+			temp.write(aux + "\n")
+		else:
+			1+1
 	else: 
 		1+1
-
-temp.close()
-out.close()
