@@ -66,8 +66,6 @@ while salir == 0:
 		temp.seek(0, os.SEEK_SET)
 		linea = temp.readline()
 
-		print linea
-
 		while linea:
 
 			linea = linea.replace("horario(", "")
@@ -137,7 +135,7 @@ while salir == 0:
 		aux += str(hora_inicio) + "," + str(hora_fin) + "," + str(asignatura) + ")"
 		print "Se va a guardar este horario:\n" + aux
 		print ""
-		print "¿Es correcto?: 0: Sip o 1: No"
+		print "¿Es correcto?: 0: Si o 1: No"
 		accion = int(input())
 		if accion == 0:
 			temp.write(aux + "\n")
